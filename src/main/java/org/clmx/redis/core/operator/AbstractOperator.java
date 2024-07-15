@@ -1,4 +1,6 @@
-package org.clmx.redis.core;
+package org.clmx.redis.core.operator;
+
+import org.clmx.redis.core.CacheEntry;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,10 +24,10 @@ public abstract class AbstractOperator {
         return map.get(key);
     }
 
-    public boolean checkInvalid(String key) {
+    public CacheEntry<?> checkInvalid(String key) {
         CacheEntry<?> entry = getCacheEntry(key);
         if (entry == null || entry.getValue() == null) {
-            return true;
+            return null;
         }
         long current = System.currentTimeMillis();
         // 如果key已过期,访问时删除
@@ -33,8 +35,8 @@ public abstract class AbstractOperator {
             System.out.printf("KEY[%s] expire cause CURRENT[%d]-TS[%d] > TTL[%d] ms%n",
                     key, current, entry.getTs(), entry.getTtl());
             map.remove(key);
-            return true;
+            return null;
         }
-        return false;
+        return entry;
     }
 }

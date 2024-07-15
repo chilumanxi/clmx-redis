@@ -1,8 +1,10 @@
 package org.clmx.redis.core.command;
 
 import org.clmx.redis.core.command.common.CmdCommand;
-import org.clmx.redis.core.command.string.GetCommand;
-import org.clmx.redis.core.command.string.SetCommand;
+import org.clmx.redis.core.command.common.DelCommand;
+import org.clmx.redis.core.command.common.ExpireCommand;
+import org.clmx.redis.core.command.common.TTLCommand;
+import org.clmx.redis.core.command.string.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -17,9 +19,20 @@ public class Commands {
     private static final Map<String, Command> ALL = new LinkedHashMap<>();
 
     static {
-        register(new SetCommand());
-        register(new GetCommand());
         register(new CmdCommand());
+        register(new DelCommand());
+        register(new TTLCommand());
+        register(new ExpireCommand());
+
+
+        register(new SetCommand());
+        register(new SetEXCommand());
+        register(new SetNXCommand());
+        register(new GetCommand());
+        register(new MGetCommand());
+        register(new MSetCommand());
+        register(new IncrCommand());
+        register(new DecrCommand());
     }
 
 
